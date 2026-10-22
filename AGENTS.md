@@ -7,6 +7,8 @@ Guidance for AI coding agents working on this repository.
 A gradebook for an instructor teaching several classes: fast grade entry, a weighted course grade, an at-risk view, email drafts, and CSV import/export with Brightspace. The app is the source of truth; Brightspace only receives exports (and occasionally sends imports back).
 
 - `index.html` — the whole app: HTML, CSS and JavaScript in one file. No build step, no dependencies.
+- `sw.js` — the service worker that lets the page work offline once it has been opened online.
+- `manifest.webmanifest`, `icon.svg`, `icon-180.png`, `icon-192.png`, `icon-512.png` — app icons and the manifest that makes the site installable. `icon.svg` is the source; the PNGs are drawn from the same shapes (blue grid, green check on `#0e1015`, content kept inside the central 80% so maskable crops don't cut it). The tab favicon is the same design inlined as a `data:` URI in `index.html` so it also shows when opened from disk. If the design changes, update all of them together.
 - `gradebook-spec.md` — the specification. It describes every feature, the data model and the wording conventions. **Read it before changing behavior, and update it in the same change** whenever behavior, data shape or UI text it describes changes.
 
 ## Hosting: GitHub Pages
@@ -14,9 +16,17 @@ A gradebook for an instructor teaching several classes: fast grade entry, a weig
 The app is served as a static page from GitHub Pages (repository root, default branch).
 
 - Pages serves `index.html` at the site root, which is why the app file is named `index.html`. Don't rename it.
-- Everything must work as a plain static file over HTTPS and also when opened from disk (`file://`). No server code, no build step, no bundler, no package manager, no external scripts, fonts or stylesheets, no CDN. Keep it a single self-contained file.
+- Everything must work as a plain static file over HTTPS and also when opened from disk (`file://`). No server code, no build step, no bundler, no package manager, no external scripts, fonts or stylesheets, no CDN. Keep the app in the single self-contained `index.html` (plus `sw.js`, the manifest and icons).
 - `.nojekyll` at the root makes Pages serve files as-is. Keep it.
 - Use relative paths only (project sites live under `https://<user>.github.io/<repo>/`).
+
+### Offline (service worker)
+
+- `index.html` registers `sw.js` and adds the manifest link (end of the Start section), only when served over http(s). Opened from disk, browsers refuse both.
+- Network first: online, the latest files are fetched and the saved copy refreshed; offline or after 4 seconds, the saved copy is used. So a push reaches users on their next online visit without bumping the cache version.
+- Bump `CACHE` (`gradebook-v2`, …) only when the list of saved files (`CORE`) or the caching strategy changes. If the app ever loads another file of its own, add it to `CORE`.
+- Other apps on the same `<user>.github.io` site share the origin's caches. `sw.js` must only create or delete caches whose names start with `gradebook-`.
+- The service worker caches app files only. Never cache, intercept or store anything with student data; grades stay in `localStorage`.
 
 ### Storage and origin (important)
 

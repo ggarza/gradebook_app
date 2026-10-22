@@ -1,0 +1,20 @@
+# Student data must never be committed (this repo is published on GitHub Pages).
+# The app has no legitimate .json, .csv or .eml files, so ignore them all:
+# backups ("Gradebook backup …json"), automatic copies, Brightspace imports/exports,
+# spreadsheet copies ("… grades ….csv"), and email drafts.
+*.json
+*.csv
+*.tsv
+*.txt
+*.eml
+*.xlsx
+*.xls
+*.pdf
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+
+# Local Claude Code state
+.claude/settings.local.json
+.claude/.cc-writes/

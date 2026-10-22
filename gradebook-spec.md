@@ -13,7 +13,7 @@ Successor to the Gradebook CSV Editor (learning-target, Pass/Fail). Borrows the 
 **Basics**
 1. Is the app or Brightspace the source of truth? *The app. Brightspace receives exports; imports from Brightspace are occasional.*
 2. Where does the data live? *In the browser's local storage. Nothing is uploaded. A downloadable backup file holds everything.*
-3. How is the app run? *As a static page on GitHub Pages (Chrome or Edge); the same file also works opened from disk. No server, no external libraries.*
+3. How is the app run? *As a static page on GitHub Pages (Chrome or Edge); the same file also works opened from disk. No server, no external libraries. Works offline once it has been opened online: a service worker (`sw.js`) keeps a copy of the app (never the grades) and uses it when the network is unavailable or slow.*
 4. Several classes? *Yes. A Class menu in the header switches between them.*
 5. Theme? *Always dark.*
 
