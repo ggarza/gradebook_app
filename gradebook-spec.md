@@ -170,6 +170,7 @@ If the saved data can't be parsed, it is copied to `gradebook-v1:unreadable` and
 - Type a number (or EX) to enter a score; Enter / F2 edits; Delete clears.
 - N / Alt+N note · I / Alt+I summary · H cell history / Alt+H class history · Alt+R re-sort.
 - Ctrl/⌘+Z undo; Ctrl/⌘+Shift+Z or Ctrl+Y redo; Ctrl/⌘+S download a backup; Ctrl/⌘+B export overlay.
+- Esc closes the top pop-up (dialog, summary, history, ⌘B overlay), even if focus has left it; in a search box with text, the first Esc clears the search.
 - Alt+1–6 switch tabs; Alt+C Class menu; `?` lists shortcuts.
 
 ## Later (not built)

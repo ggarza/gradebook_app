@@ -1153,6 +1153,14 @@ document.addEventListener('keydown', e => {
     if (expDlg) { e.preventDefault(); expDlg.close(); return; }
     if (!document.querySelector('dialog[open]')) { e.preventDefault(); exportDialog(); return; }
   }
+  /* Esc closes the top pop-up even when focus has left it (e.g. after it re-renders); a search box with text is cleared first. */
+  if (e.key === 'Escape' && !e.isComposing && document.querySelector('dialog[open]')) {
+    e.preventDefault();
+    const q = e.target;
+    if (q && q.matches && q.matches('dialog[open] input[type=search]') && q.value) { q.value = ''; q.dispatchEvent(new Event('input', {bubbles: true})); return; }
+    $$('dialog[open]').pop().close();
+    return;
+  }
   if (document.querySelector('dialog[open]')) return;
   const t = e.target; const typing = t && t.matches && t.matches('input,textarea,select');
   const ctl = e.ctrlKey || e.metaKey;
@@ -2742,6 +2750,7 @@ function keysDialog() {
     ${r(`<kbd>${CMD}${isMac ? '⇧' : 'Shift+'}Z</kbd> <kbd>${CMD}Y</kbd>`, 'Redo')}
     ${r(`<kbd>${CMD}S</kbd>`, 'Download a backup')}
     ${r(`<kbd>${CMD}B</kbd>`, 'Export for Brightspace (opens over any tab; press again or Esc to close)')}
+    ${r('<kbd>Esc</kbd> in a pop-up', 'Close it (a search box with text is cleared first)')}
     ${r(`<kbd>${ALT}1</kbd>–<kbd>6</kbd>`, 'Switch tabs')}
     ${r(`<kbd>${ALT}C</kbd>`, 'Jump to the Class menu')}
     ${r('Click a column header', 'Sort; click again to reverse, a third time to clear. <kbd>Shift</kbd>+click adds a second sort.')}
