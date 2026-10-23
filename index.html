@@ -114,6 +114,8 @@ table.grid{border-collapse:separate;border-spacing:0;table-layout:fixed}
 /* Export's Download CSV row stays in view at the bottom of the tab or ⌘B overlay on short screens; the margins cancel the card's / dialog body's padding. */
 .expbar{position:sticky;bottom:0;z-index:2;background:var(--panel);border-top:1px solid var(--line);margin:12px -18px -16px;padding:10px 18px 12px}
 .card .expbar{border-radius:0 0 12px 12px}
+.expdlg .expbar{padding-bottom:4px}
+.expdlg .dlg-f{padding-top:8px}
 table.list{width:100%;border-collapse:collapse;font-size:13.5px}
 table.list th,table.list td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
 table.list thead th{color:var(--muted);font-weight:600;font-size:12px;position:sticky;top:0;background:var(--panel2);z-index:1}
@@ -2440,7 +2442,7 @@ function exportDialog() {
   S.expSel = null;
   openDialog({title: `Export for Brightspace: ${c.name}`, wide: 1120, body: '', buttons: [{label: 'Go to Export & import', left: true, onClick: () => { setView('bs'); }}, {label: 'Close', primary: true}],
     onOpen: d => {
-      expDlg = d; paintExpDlg();
+      expDlg = d; d.classList.add('expdlg'); paintExpDlg();
       const b = $('.dlg-b', d);
       b.addEventListener('click', e => { expClick(e); });
       b.addEventListener('change', e => { expChange(e); });
