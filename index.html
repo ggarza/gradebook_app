@@ -795,8 +795,10 @@ function renderView() {
   ({grades: renderGrades, course: renderCourse, setup: renderSetup, emails: renderEmails, bs: renderBS, data: renderData})[S.view]();
 }
 function renderAll() { renderClassSel(); setSaveState(); renderBanner(); renderView(); }
+/* Shown at the top of Help and on the empty start screen. */
+const PRIVACY_NOTE = 'Nothing is saved online: grades stay in this browser and are never uploaded, keeping student records private under FERPA.';
 function noClassHTML() {
-  return `<div class="empty"><h2>No class yet</h2><p class="muted">Create a class, or import a Brightspace grades CSV to create one with its students and grade items.</p>
+  return `<div class="empty"><h2>No class yet</h2><div class="note">🔒 ${PRIVACY_NOTE}</div><p class="muted">Create a class, or import a Brightspace grades CSV to create one with its students and grade items.</p>
   <div class="row"><button class="btn primary" data-go="new">＋ New class</button><button class="btn" data-go="import">Import a Brightspace CSV…</button><button class="btn" data-go="restore">Restore a backup…</button></div></div>`;
 }
 function needsDataHTML(c) {
@@ -2760,6 +2762,7 @@ function keysDialog() {
 }
 function helpDialog() {
   openDialog({title: 'About Gradebook', wide: 720, body: `<div class="help">
+   <div class="note" style="margin-top:0">🔒 ${PRIVACY_NOTE}</div>
    <p>A gradebook for your classes that runs entirely in this browser. Brightspace is where grades get posted; this app is where you keep and enter them.</p>
    <h3>Typical workflow</h3><ul>
     <li><b>Start a class</b> by importing a Brightspace grades export (Export &amp; import). It brings in the students and any Points or Text grade items.</li>

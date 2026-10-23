@@ -182,3 +182,5 @@ If the saved data can't be parsed, it is copied to `gradebook-v1:unreadable` and
 ## Privacy
 
 Student grade data stays in this browser. Nothing is uploaded. Backups, exports, printed summaries and .eml drafts contain grades and should be stored accordingly.
+
+A one-sentence notice ("Nothing is saved online: grades stay in this browser and are never uploaded, keeping student records private under FERPA.") appears at the top of Help and on the empty start screen ("No class yet").
